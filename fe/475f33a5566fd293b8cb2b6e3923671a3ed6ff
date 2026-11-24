@@ -1,0 +1,21 @@
+README.md
+  s_77d58778bfc3b2::t_958b5690558ff4 47
+redis/summary.md
+  s_77d58778bfc3b2::t_51736e5e4a781a 7-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "fe475f33a5566fd293b8cb2b6e3923671a3ed6ff",
+  "prompts": {},
+  "sessions": {
+    "s_77d58778bfc3b2": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_zolov1hilnxz",
+        "model": "auto(free)"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
