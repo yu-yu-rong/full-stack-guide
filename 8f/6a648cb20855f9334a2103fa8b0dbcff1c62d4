@@ -1,0 +1,23 @@
+redis/skiplist-and-sorted-set.md
+  s_672020bf4aaab5::t_284147a3ffe74c 6-7
+README.md
+  s_672020bf4aaab5::t_d8b3f879ae7f99 47
+redis/summary.md
+  s_672020bf4aaab5::t_c90db9715d118c 35-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "8f6a648cb20855f9334a2103fa8b0dbcff1c62d4",
+  "prompts": {},
+  "sessions": {
+    "s_672020bf4aaab5": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_guclorvdwp14",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
