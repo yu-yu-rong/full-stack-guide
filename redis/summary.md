@@ -75,7 +75,7 @@
 
 | 原因 | 说明 |
 | --- | --- |
-| 纯内存访问 | 内存随机读约 100ns 量级，比磁盘随机读快 4~5 个数量级 |
+| 纯内存访问 | 内存随机读约 100ns 量级，比磁盘随机读快 3~5 个数量级（SSD 约 100µs，机械盘约 10ms） |
 | IO 多路复用 | epoll 单线程管理上万连接，无阻塞、无额外线程开销 |
 | 单线程无锁 | 不存在竞态，不需要加锁/解锁，没有线程切换成本 |
 | 高效数据结构 | SDS 预分配、listpack 连续内存、跳表 O(log N)、渐进式 rehash |
@@ -95,9 +95,10 @@
 | 版本 | 变化 |
 | --- | --- |
 | ≤ 5.x | 完全单线程（命令 + IO 都在主线程）；后台有 bio 线程做 close/aof fsync/lazy free |
-| 6.0 | 引入**多线程 IO**：`io-threads` 默认 1（即关闭），只负责 socket 读写和协议解析，**命令执行仍在主线程** |
-| 7.0 | 多线程 IO 支持读写分离配置；`listpack` 全面替代 `ziplist`；多部分 AOF；Function |
-| 8.0 | 更完善的 IO 线程模型、hash 字段级过期 `HEXPIRE`、向量集合等新结构 |
+| 6.0 | 引入**多线程 IO**：`io-threads` 默认 1（即关闭），只负责 socket 读写和协议解析，**命令执行仍在主线程**；`io-threads-do-reads` 控制读是否也走多线程（默认 no） |
+| 7.0 | `listpack` 全面替代 `ziplist`；多部分 AOF；Function；分片 Pub/Sub |
+| 7.4 | hash 字段级过期 `HEXPIRE` 系列命令 |
+| 8.0 | 新 IO 线程模型（进一步下沉网络层）、向量集合、内置 JSON/搜索/时序等 |
 
 为什么命令执行不能多线程？因为一旦并行，`INCR`、`LPUSH`、事务、Lua 的原子性全部需要加锁，复杂度暴涨而收益有限——瓶颈通常在网络和内存，不在 CPU。
 
@@ -155,11 +156,11 @@ Redis 7.x 的编码选择逻辑（简化）：
 ```mermaid
 flowchart TD
     A["写入命令"] --> B{"类型"}
-    B -->|string| C{"是整数且长度 ≤ 20？"}
+    B -->|string| C{"能解析为 64 位整数？"}
     C -->|是| C1["int：直接存 long"]
     C -->|否| C2{"长度 ≤ 44？"}
     C2 -->|是| C3["embstr：redisObject + SDS 一次分配"]
-    C2 -->|否| C4["raw：两次分配，可共享、可扩容"]
+    C2 -->|否| C4["raw：两次分配，可扩容"]
     B -->|"hash / zset / set / list"| D{"元素数 ≤ N 且单元素 ≤ M？"}
     D -->|是| D1["listpack（redis 7.0+）<br/>连续内存，省指针"]
     D -->|否| D2["hashtable / skiplist / quicklist"]
@@ -169,7 +170,7 @@ flowchart TD
 
 | 类型 | 紧凑编码 | 转换条件（默认值） | 转换后 |
 | --- | --- | --- | --- |
-| string | int / embstr | 长度 > 44 字节 | raw |
+| string | int / embstr | 长度 > 44 字节，或内容被修改（如 APPEND） | raw |
 | hash | listpack | `hash-max-listpack-entries 128` 或 `hash-max-listpack-value 64` | hashtable |
 | zset | listpack | `zset-max-listpack-entries 128` 或 `zset-max-listpack-value 64` | skiplist |
 | set（整数） | intset | `set-max-intset-entries 512` | hashtable |
@@ -195,7 +196,7 @@ C 的 `char *` 做字符串有三个致命问题，SDS（Simple Dynamic String�
 | 求长度要遍历 | `O(N)` | `len` 字段，`O(1)` |
 | 二进制不安全 | `\0` 截断，存不了图片/序列化数据 | 按 `len` 判断，二进制安全 |
 | 拼接易溢出 | `strcat` 可能越界 | 先检查 `alloc - len`，不够就扩容 |
-| 频繁扩容 | 每次改都要 `realloc` | **空间预分配**：`len < 1MB` 时翻倍，`≥ 1MB` 时多给 1MB |
+| 频繁扩容开销 | 无容量概念，需手动管理内存 | **空间预分配**：`len < 1MB` 时翻倍，`≥ 1MB` 时多给 1MB，减少 realloc 次数 |
 | 缩短不释放 | — | **惰性释放**：只改 `len`，等真正需要时再 `realloc` |
 
 ```c
@@ -207,7 +208,9 @@ struct sdshdr {
 };
 ```
 
-`embstr` 与 `raw` 的区别：`embstr` 把 `redisObject` 和 `sdshdr` 一次性 `malloc`，**只读**（append 时会转成 `raw` 重新分配），适合短小的固定字符串；`raw` 分两次分配，可扩容、可被多个 key 共享（如共享整数 0~9999）。
+（上面以 `sdshdr32` 为例；SDS 实际有 sdshdr5/8/16/32/64 五种头部，按字符串长度选用，以节省头部开销。）
+
+`embstr` 与 `raw` 的区别：`embstr` 把 `redisObject` 和 `sdshdr` 一次性 `malloc`，**只读**（append 时会转成 `raw` 重新分配），适合短小的固定字符串；`raw` 分两次分配，可扩容。注意：共享整数 0~9999 用的是 `int` 编码，而不是 `raw`。
 
 ### 2.5 listpack：为什么要干掉 ziplist
 
@@ -283,7 +286,7 @@ AOF 会无限膨胀（一个 key 改 100 次就有 100 条命令）。重写是"
 重写后:  SET a 10
 ```
 
-重写期间的新写入进 `aof_rewrite_buf`，子进程写完后主进程把这块补进去，保证不丢。
+重写期间的新写入不能丢：7.0 之前先缓冲在 `aof_rewrite_buf`，子进程写完 base 后由主进程把这段缓冲追加进新 AOF；7.0 起（多部分 AOF）直接写进 incr AOF 文件，不再经过重写缓冲。
 
 **7.0 的多部分 AOF（Multi Part AOF）**：拆成 `base.rdb`（或 `base.aof`）+ `incr.aof` + `manifest`，重写时只需替换 base，避免大文件重写的 IO 放大和内存拷贝。
 
@@ -372,7 +375,7 @@ Redis 没有实现标准 LRU 链表（内存开销太大），而是**采样 + �
 LFU 把这个 24 bit 拆成两段：**16 bit 衰减时间 + 8 bit 计数器**（最大 255）。
 
 - 计数器不是每次 +1，而是**概率递增**：计数越大，+1 的概率越低（对数计数），避免短时间高频访问直接冲到 255；
-- 每次访问按 `lfu-decay-time`（默认 60s）衰减；
+- 计数器随时间衰减：`lfu-decay-time`（默认 1，**单位是分钟**）表示每空闲 1 分钟计数减 1（在访问时结算衰减）；
 - `lfu-log-factor`（默认 10）控制增长速度。
 
 **追问：LRU 的致命问题是什么？**
@@ -423,7 +426,7 @@ sequenceDiagram
 
 - 复制是**异步**的：主节点写完就返回客户端，不等从节点确认。所以主库宕机可能丢数据（`WAIT` 命令可做有限同步，但会牺牲性能）。
 - 从节点默认**只读**（`replica-read-only yes`），可配置读写分离，但要承担主从延迟导致的一致性问题。
-- 复制风暴：一个主节点挂多个从节点，或从节点再挂从节点（级联复制），可缓解主节点压力。
+- **复制风暴**：大量从节点同时重连、都触发全量同步时，主节点 fork 和网络压力骤增。缓解：调大 `repl-backlog-size` 让断线尽量走增量恢复、用级联复制（从节点再挂从节点）分摊全量同步压力、错峰重连。
 
 ### 5.2 哨兵（Sentinel）
 
@@ -644,7 +647,7 @@ end
 | 校验和删除分两步（`GET` 后 `DEL`） | 中间锁过期，仍会误删 |
 | 锁无过期时间 | 死锁 |
 | 过期时间短于业务耗时 | 并发进入临界区 |
-| 用 `DEL` 而非 `UNLINK` | 影响可忽略，但大 value 会阻塞 |
+| 抢锁失败无超时/重试策略 | 请求堆积等待，或直接放弃导致业务失败 |
 
 ### 7.3 锁续期与 Redisson 看门狗
 
@@ -732,7 +735,7 @@ Lua 更适合"读-改-写"这类需要条件的复合操作；事务适合"批�
 | 原子执行 | ❌（中间可插入其他客户端命令） | ✅ | ✅ |
 | 条件逻辑 | ❌ | ❌ | ✅ |
 | 错误处理 | 逐条返回 | 不支持回滚 | 可用 `pcall` 捕获 |
-| Cluster 限制 | 同槽 | 同槽 | 同槽 |
+| Cluster 限制 | 无（命令相互独立，客户端按槽路由） | 同槽 | 同槽 |
 | 典型用途 | 批量读写、导入导出 | 简单批量原子操作 | 库存扣减、分布式锁、限流 |
 
 ---
@@ -771,7 +774,8 @@ redis-cli --latency-history         # 分时段看毛刺
 redis-cli --intrinsic-latency 100   # 测机器本身（排除 Redis 因素）
 redis-cli slowlog get 10            # 慢查询
 redis-cli info commandstats         # 各命令调用次数与平均耗时
-redis-cli info stats | grep rejected  # 是否触发 OOM 拒绝
+redis-cli info stats | grep rejected_connections  # 因 maxclients 被拒的连接数
+redis-cli info stats | grep evicted_keys          # 被淘汰的 key 数（触发 maxmemory）
 redis-cli --bigkeys / --hotkeys
 LATENCY DOCTOR                      # 内置延迟诊断
 ```
@@ -840,12 +844,13 @@ ZREVRANK board bob              # 排名（0-based）
 令牌桶 Lua 骨架：
 
 ```lua
-local now = redis.call('TIME')[1]
+-- KEYS[1]=限流key；ARGV[1]=桶容量（也是初始令牌数）；ARGV[2]=每秒补充令牌数
+local now = redis.call('TIME')[1]                 -- 秒级时间戳
 local last = tonumber(redis.call('HGET', KEYS[1], 'ts') or now)
 local tokens = tonumber(redis.call('HGET', KEYS[1], 'tk') or ARGV[1])
 local rate, cap = tonumber(ARGV[2]), tonumber(ARGV[1])
-tokens = math.min(cap, tokens + (now - last) * rate)
-if tokens < 1 then return 0 end
+tokens = math.min(cap, tokens + (now - last) * rate)   -- 按时间差补令牌，封顶桶容量
+if tokens < 1 then return 0 end                   -- 令牌不足，拒绝
 redis.call('HSET', KEYS[1], 'ts', now, 'tk', tokens - 1)
 return 1
 ```
@@ -891,26 +896,27 @@ INCR seq                             # 单机严格递增
 # 签到：用户 1001 在 2026-11 的第 24 天签到
 SETBIT sign:1001:202611 23 1
 BITCOUNT sign:1001:202611            # 本月签到天数
-BITFIELD sign:1001:202611 GET u1 0   # 取某天状态
+BITFIELD sign:1001:202611 GET u1 23  # 取第 24 天状态（offset = 天数 - 1）
 
 # UV：按天/按页面
 PFADD uv:20261124 user1 user2 user3
 PFCOUNT uv:20261124                  # 约 0.81% 误差
 ```
 
-bitmap 的内存账：1 亿用户 × 31 天 = 31 亿 bit ≈ 387MB（按月 key 分摊）。用户 ID 稀疏时（如 ID 上亿但日活百万）会浪费大量空间，此时改用 `set` 或 HLL。
+上例是「**每用户每月一个 key**」（offset = 天数 - 1），每人每月 31 bit，1 亿用户 × 31 bit ≈ 387MB 总量。另一种常见设计是「**每天一个 key**」（offset = 用户 ID），1 亿用户约 12MB/天（见 10.1）；后者在用户 ID 稀疏时（ID 上亿但日活百万）会浪费大量空间，此时改用 `set` 或 HLL。
 
 ### 10.7 秒杀扣库存
 
 ```lua
--- KEYS[1]=库存, ARGV[1]=用户ID, ARGV[2]=扣减数量
-if redis.call('SISMEMBER', KEYS[1] .. ':users', ARGV[1]) == 1 then
+-- KEYS[1]=库存key，KEYS[2]=已购用户集合（Cluster 下两者须同 hash tag，如 {seckill:1001}:stock / {seckill:1001}:users）
+-- ARGV[1]=用户ID，ARGV[2]=扣减数量
+if redis.call('SISMEMBER', KEYS[2], ARGV[1]) == 1 then
     return -2                          -- 已购买，幂等返回
 end
 local stock = tonumber(redis.call('GET', KEYS[1]) or '0')
 if stock < tonumber(ARGV[2]) then return -1 end   -- 库存不足
 redis.call('DECRBY', KEYS[1], ARGV[2])
-redis.call('SADD', KEYS[1] .. ':users', ARGV[1])
+redis.call('SADD', KEYS[2], ARGV[1])
 return stock - tonumber(ARGV[2])
 ```
 
@@ -930,7 +936,8 @@ return stock - tonumber(ARGV[2])
 | 6.0 | 多线程 IO、ACL、客户端缓存（RESP3） | 网络瓶颈优化、权限模型 |
 | 7.0 | listpack 全面替代 ziplist、多部分 AOF、Function、分片 Pub/Sub、ACL v2 | 内存与持久化的实质改进 |
 | 7.2 | set 支持 listpack 编码 | 小集合更省内存 |
-| 8.0 | hash 字段级过期 `HEXPIRE`、向量集合、IO 线程增强 | 新场景（推荐系统、特征存储） |
+| 7.4 | hash 字段级过期 `HEXPIRE` 系列 | 更细粒度 TTL，节省 key 数量 |
+| 8.0 | 向量集合、新 IO 线程模型、内置 JSON/搜索/时序 | 新场景（推荐系统、特征存储、向量检索） |
 
 **能说清"7.0 的 listpack 解决了什么"和"6.0 的多线程为什么不是命令多线程"，就已经超过大多数候选人。**
 
@@ -964,7 +971,7 @@ return stock - tonumber(ARGV[2])
 | 22 | 混合持久化 | RDB 头 + AOF 增量（4.0+） |
 | 23 | 重启先加载哪个 | 有 AOF 则用 AOF |
 | 24 | 过期删除策略 | 惰性 + 定期（每 100ms 抽样 20 个） |
-| 25 | 淘汰策略几种 | 8 种（3 类 × lru/lfu/random + ttl + noeviction） |
+| 25 | 淘汰策略几种 | 8 种（2 范围 allkeys/volatile × 3 算法 lru/lfu/random + volatile-ttl + noeviction） |
 | 26 | 默认淘汰策略 | `noeviction`，写操作报 OOM |
 | 27 | Redis 的 LRU 是精确的吗 | 不是，24bit 时钟 + 随机采样 |
 | 28 | LFU 解决什么问题 | LRU 被全表扫描污染，LFU 看频率 |
