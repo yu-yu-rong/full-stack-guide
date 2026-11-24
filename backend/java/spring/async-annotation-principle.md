@@ -2,6 +2,8 @@
 
 > 一句话概括：`@Async` = **AOP 代理 + `AsyncExecutionInterceptor` 把方法调用提交到 `Executor`**。注解本身不开线程——跑在哪个池、异常去了哪里、什么时候悄悄失效，全由代理链与执行器选择规则决定。
 
+预计阅读时间：大约 55 分钟
+
 所属主题：[Spring 常见面试题总结](summary.md)
 
 本文以 **Spring Framework 6.1.x / Spring Boot 3.2.x** 源码为基线，源码锚点用 `类名#方法名` 标注，版本差异单独注明。代理的通用边界（JDK/CGLIB、自调用、final）见 [ioc-and-aop.md](ioc-and-aop.md)，循环依赖与三级缓存见 [bean-lifecycle-and-circular-dependency.md](bean-lifecycle-and-circular-dependency.md)，事务上下文见 [transaction.md](transaction.md)，本文不重复展开。

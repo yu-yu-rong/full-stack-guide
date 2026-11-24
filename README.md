@@ -2,25 +2,27 @@
 
 > 一句话概括：这是一个面向全栈工程师的系统性学习与面试准备笔记库，按主题沉淀「原理 + 源码 + 工程取舍 + 面试表达」四层内容。
 
+预计阅读时间：大约 5 分钟
+
 仓库不是速查手册的堆砌，而是希望每篇文档都能回答三个问题：**它是什么、它的边界在哪、在真实项目里该怎么用**。因此文档普遍采用「一句话结论 → 机制展开 → 边界与代价 → 实践与追问」的组织方式，并配有表格、示意图和可直接运行的示例。
 
 ---
 
 ## 内容导航
 
-| 主题 | 文档 | 内容概要 | 适合读者 |
-| --- | --- | --- | --- |
-| Redis | [Redis 常见面试题总结](redis/summary.md) | 按真实面试顺序覆盖基础认知、数据类型与底层编码、持久化、过期与淘汰、主从/哨兵/Cluster、缓存三大问题与双写一致性、分布式锁、事务/Lua/Pipeline、性能排障、场景设计，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
-| Redis | [跳表与 Redis 有序集合深度笔记](redis/skiplist-and-sorted-set.md) | 从有序链表的瓶颈讲到多级索引与随机层高，结合 Redis 7.x 源码剖析 `zset` 的 `dict + skiplist` 双结构、`span` 设计与排名计算，并对比红黑树、B+ 树等替代方案 | 想深入数据结构与源码的开发者 |
-| Spring | [Spring 常见面试题总结](backend/java/spring/summary.md) | 按真实面试顺序覆盖 IoC/DI、Bean 生命周期与三级缓存、AOP 代理边界、事务传播与失效场景、MVC 请求流程、Boot 自动配置与 Starter、生态选型与工程踩坑，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
-| Spring | [IoC & AOP 详解（快速搞懂）](backend/java/spring/ioc-and-aop.md) | 从 new 依赖的耦合问题讲清 IoC/DI 思想与注入方式，JDK/CGLIB 代理源码对比、通知顺序、自调用失效与 Spring AOP 边界 | 初中级后端、想搞懂代理机制的开发者 |
-| Spring | [Bean 生命周期与循环依赖源码详解](backend/java/spring/bean-lifecycle-and-circular-dependency.md) | doCreateBean/refresh() 源码走读、Full/Lite 配置类、三级缓存与早期代理一致性推演、无解循环依赖与 @Lazy 原理 | 准备中高级面试、想读容器源码的开发者 |
-| Spring | [Spring 事务详解](backend/java/spring/transaction.md) | TransactionInterceptor 与 ThreadLocal 连接绑定、七种传播行为源码、失效场景全清单、回滚规则、大事务治理与分布式选型 | 初中级后端、被事务坑过的开发者 |
-| Spring | [Spring 中的设计模式详解](backend/java/spring/design-patterns.md) | 工厂/单例/代理/模板方法/观察者/适配器/策略/责任链等模式的角色映射、源码锚点与面试答法 | 想系统答好模式题的开发者 |
-| Spring | [Spring Boot 自动装配原理详解](backend/java/spring/boot-autoconfiguration.md) | AutoConfigurationImportSelector 主链路、条件注解与用户 Bean 优先时机、自定义 Starter 完整示例、Boot 4 模块化演进 | 初中级后端、要写 Starter 的开发者 |
-| Spring | [Spring Boot 的 JAR 为什么可以直接运行](backend/java/spring/boot-executable-jar.md) | fat jar 布局与 MANIFEST、启动器家族与嵌套 jar 类加载、分层 jar 与 CDS/AOT 启动加速取舍 | 想搞懂类加载与部署形态的开发者 |
-| Spring | [@Async 注解原理分析](backend/java/spring/async-annotation-principle.md) | 代理注册链与执行器选择顺序、默认线程池坑、异常与 ThreadLocal 上下文边界、异步事件组合语义 | 初中级后端、排查过异步坑的开发者 |
-| Spring | [Spring MVC 请求处理流程详解](backend/java/spring/mvc-request-flow.md) | doDispatch 源码走读、参数/返回值 SPI 与自定义注解示例、Filter/Interceptor/AOP 对比、统一异常处理与异步请求 | 初中级后端、想扩展 MVC 的开发者 |
+| 主题 | 文档 | 预计阅读 | 内容概要 | 适合读者 |
+| --- | --- | --- | --- | --- |
+| Redis | [Redis 常见面试题总结](redis/summary.md) | 大约 60 分钟 | 按真实面试顺序覆盖基础认知、数据类型与底层编码、持久化、过期与淘汰、主从/哨兵/Cluster、缓存三大问题与双写一致性、分布式锁、事务/Lua/Pipeline、性能排障、场景设计，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
+| Redis | [跳表与 Redis 有序集合深度笔记](redis/skiplist-and-sorted-set.md) | 大约 60 分钟 | 从有序链表的瓶颈讲到多级索引与随机层高，结合 Redis 7.x 源码剖析 `zset` 的 `dict + skiplist` 双结构、`span` 设计与排名计算，并对比红黑树、B+ 树等替代方案 | 想深入数据结构与源码的开发者 |
+| Spring | [Spring 常见面试题总结](backend/java/spring/summary.md) | 大约 70 分钟 | 按真实面试顺序覆盖 IoC/DI、Bean 生命周期与三级缓存、AOP 代理边界、事务传播与失效场景、MVC 请求流程、Boot 自动配置与 Starter、生态选型与工程踩坑，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
+| Spring | [IoC & AOP 详解（快速搞懂）](backend/java/spring/ioc-and-aop.md) | 大约 55 分钟 | 从 new 依赖的耦合问题讲清 IoC/DI 思想与注入方式，JDK/CGLIB 代理源码对比、通知顺序、自调用失效与 Spring AOP 边界 | 初中级后端、想搞懂代理机制的开发者 |
+| Spring | [Bean 生命周期与循环依赖源码详解](backend/java/spring/bean-lifecycle-and-circular-dependency.md) | 大约 75 分钟 | doCreateBean/refresh() 源码走读、Full/Lite 配置类、三级缓存与早期代理一致性推演、无解循环依赖与 @Lazy 原理 | 准备中高级面试、想读容器源码的开发者 |
+| Spring | [Spring 事务详解](backend/java/spring/transaction.md) | 大约 65 分钟 | TransactionInterceptor 与 ThreadLocal 连接绑定、七种传播行为源码、失效场景全清单、回滚规则、大事务治理与分布式选型 | 初中级后端、被事务坑过的开发者 |
+| Spring | [Spring 中的设计模式详解](backend/java/spring/design-patterns.md) | 大约 50 分钟 | 工厂/单例/代理/模板方法/观察者/适配器/策略/责任链等模式的角色映射、源码锚点与面试答法 | 想系统答好模式题的开发者 |
+| Spring | [Spring Boot 自动装配原理详解](backend/java/spring/boot-autoconfiguration.md) | 大约 65 分钟 | AutoConfigurationImportSelector 主链路、条件注解与用户 Bean 优先时机、自定义 Starter 完整示例、Boot 4 模块化演进 | 初中级后端、要写 Starter 的开发者 |
+| Spring | [Spring Boot 的 JAR 为什么可以直接运行](backend/java/spring/boot-executable-jar.md) | 大约 65 分钟 | fat jar 布局与 MANIFEST、启动器家族与嵌套 jar 类加载、分层 jar 与 CDS/AOT 启动加速取舍 | 想搞懂类加载与部署形态的开发者 |
+| Spring | [@Async 注解原理分析](backend/java/spring/async-annotation-principle.md) | 大约 55 分钟 | 代理注册链与执行器选择顺序、默认线程池坑、异常与 ThreadLocal 上下文边界、异步事件组合语义 | 初中级后端、排查过异步坑的开发者 |
+| Spring | [Spring MVC 请求处理流程详解](backend/java/spring/mvc-request-flow.md) | 大约 75 分钟 | doDispatch 源码走读、参数/返回值 SPI 与自定义注解示例、Filter/Interceptor/AOP 对比、统一异常处理与异步请求 | 初中级后端、想扩展 MVC 的开发者 |
 
 后续会按「语言与运行时 → 数据库 → 缓存与消息 → 前端与 BFF → 系统设计与工程实践」逐步补充，新文档会同步登记到上表。
 
@@ -65,6 +67,7 @@ full-stack-guide/
 5. **讲清边界**：不仅写「怎么用」，还要写「什么时候不成立、代价是什么」。
 6. **理论与实践结合**：关键结论配示意图、源码片段或可运行示例，面试类内容附追问方向。
 7. **文末速记**：用几句话或一页内容帮助读者快速回忆。
+8. **标注阅读时间**：开篇引用块后加一行「预计阅读时间：大约 xx 分钟」，按全文精读约 500 字/分钟估算、取 5 的整数倍，并在「内容导航」表同步登记。
 
 ---
 

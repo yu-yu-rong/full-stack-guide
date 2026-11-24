@@ -2,6 +2,8 @@
 
 > 一句话概括：标准 JVM 只认「扁平 classpath」，读不了 jar 里嵌套的 jar；Boot 用**特殊的 jar 布局（BOOT-INF）+ 放在 jar 根部的启动器（JarLauncher）+ 支持嵌套 jar 的自定义类加载器**，把 `java -jar` 变成「先启动启动器、再由启动器启动应用」的两段式引导。
 
+预计阅读时间：大约 65 分钟
+
 所属主题：[Spring 常见面试题总结](summary.md)
 
 本文以 **Spring Boot 3.x** 为基线（源码锚点核对自 3.2.0 / 3.3.0 与 2.7.18 的 `spring-boot-loader` 源码），重点讲透类加载与启动器机制。**Boot 3.2 是分水岭**：启动器包名从 `org.springframework.boot.loader` 重组为 `org.springframework.boot.loader.launch`，嵌套 jar 的 URL 协议与底层实现整体重写，文中均标注版本差异。启动骨架部分与总结 7.5 节衔接，但展开到源码锚点与工程边界。
