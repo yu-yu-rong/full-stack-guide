@@ -1,0 +1,24 @@
+README.md
+  s_742005a77e83a3::t_615b2756545a7f 35
+  s_742005a77e83a3::t_af853c30d0d469 15
+  s_742005a77e83a3::t_c9c21612824c25 25-28,30-32
+  s_742005a77e83a3::t_077f9ffe70dd93 29
+backend/java/spring/summary.md
+  s_742005a77e83a3::t_6d618386c9b189 1-967
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "6e5ca4199f65ab12fdf3b70cc8b1f6dff4dc30c8",
+  "prompts": {},
+  "sessions": {
+    "s_742005a77e83a3": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_p1gv6ioiq218",
+        "model": "qwen4-max"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
