@@ -47,7 +47,14 @@
 
 | 文档 | 内容 |
 | --- | --- |
-| （暂无专题文档） | 后续计划：Bean 生命周期与三级缓存源码、事务传播与失效场景、Boot 自动装配源码 |
+| [IoC & AOP 详解（快速搞懂）](ioc-and-aop.md) | IoC/DI 思想与注入方式、容器双接口、JDK/CGLIB 代理源码对比、通知顺序、自调用失效与 AOP 边界 |
+| [Bean 生命周期与循环依赖（三级缓存）源码详解](bean-lifecycle-and-circular-dependency.md) | doCreateBean/refresh() 走读、Full/Lite 配置类、三级缓存与早期代理一致性、无解循环依赖与 @Lazy 原理 |
+| [Spring 事务详解](transaction.md) | TransactionInterceptor 与 ThreadLocal 连接绑定、传播行为源码、失效场景全清单、回滚规则与大事务治理 |
+| [Spring 中的设计模式详解](design-patterns.md) | 工厂/单例/代理/模板方法/观察者/适配器/策略/责任链等模式的角色映射、源码锚点与面试答法 |
+| [Spring Boot 自动装配原理详解](boot-autoconfiguration.md) | AutoConfigurationImportSelector 主链路、条件注解与用户 Bean 优先时机、自定义 Starter 完整示例、Boot 4 模块化 |
+| [Spring Boot 的 JAR 为什么可以直接运行？](boot-executable-jar.md) | fat jar 布局与 MANIFEST、启动器家族与嵌套 jar 类加载、分层 jar 与启动加速取舍 |
+| [@Async 注解原理分析](async-annotation-principle.md) | 代理注册链与执行器选择顺序、默认线程池坑、异常与上下文边界、异步事件组合语义 |
+| [Spring MVC 请求处理流程详解](mvc-request-flow.md) | doDispatch 源码走读、参数/返回值 SPI 与自定义注解示例、三层增强对比、统一异常处理与异步请求 |
 
 本文目录：
 
@@ -491,7 +498,7 @@ Spring 借用了 AspectJ 的**注解和切点表达式**（`@Aspect` 风格）�
 | 7 | 多线程调用 | 事务连接在 ThreadLocal，新线程拿不到 | 事务不跨线程；跨线程用编程式事务各自管理 |
 | 8 | 数据库不支持事务 | 如 MyISAM 引擎 | 换 InnoDB |
 
-另一个隐蔽坑：**注解只标在接口上**——CGLIB 代理基于实现类，接口上的 `@Transactional` 不会被继承读取。注解应标在实现类（或实现类方法）上。
+另一个隐蔽坑：**注解只标在接口上**——旧资料常说"CGLIB 读不到接口注解"，但 5.0 起属性查找改用 find 语义（会搜索接口与父类），接口注解对类代理同样生效，真正不认的是 AspectJ 织入模式。官方仍推荐标在实现类（或实现类方法）上，机制详见 [Spring 事务详解](transaction.md)。
 
 ### 5.5 回滚规则
 

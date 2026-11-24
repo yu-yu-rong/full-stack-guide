@@ -13,6 +13,14 @@
 | Redis | [Redis 常见面试题总结](redis/summary.md) | 按真实面试顺序覆盖基础认知、数据类型与底层编码、持久化、过期与淘汰、主从/哨兵/Cluster、缓存三大问题与双写一致性、分布式锁、事务/Lua/Pipeline、性能排障、场景设计，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
 | Redis | [跳表与 Redis 有序集合深度笔记](redis/skiplist-and-sorted-set.md) | 从有序链表的瓶颈讲到多级索引与随机层高，结合 Redis 7.x 源码剖析 `zset` 的 `dict + skiplist` 双结构、`span` 设计与排名计算，并对比红黑树、B+ 树等替代方案 | 想深入数据结构与源码的开发者 |
 | Spring | [Spring 常见面试题总结](backend/java/spring/summary.md) | 按真实面试顺序覆盖 IoC/DI、Bean 生命周期与三级缓存、AOP 代理边界、事务传播与失效场景、MVC 请求流程、Boot 自动配置与 Starter、生态选型与工程踩坑，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
+| Spring | [IoC & AOP 详解（快速搞懂）](backend/java/spring/ioc-and-aop.md) | 从 new 依赖的耦合问题讲清 IoC/DI 思想与注入方式，JDK/CGLIB 代理源码对比、通知顺序、自调用失效与 Spring AOP 边界 | 初中级后端、想搞懂代理机制的开发者 |
+| Spring | [Bean 生命周期与循环依赖源码详解](backend/java/spring/bean-lifecycle-and-circular-dependency.md) | doCreateBean/refresh() 源码走读、Full/Lite 配置类、三级缓存与早期代理一致性推演、无解循环依赖与 @Lazy 原理 | 准备中高级面试、想读容器源码的开发者 |
+| Spring | [Spring 事务详解](backend/java/spring/transaction.md) | TransactionInterceptor 与 ThreadLocal 连接绑定、七种传播行为源码、失效场景全清单、回滚规则、大事务治理与分布式选型 | 初中级后端、被事务坑过的开发者 |
+| Spring | [Spring 中的设计模式详解](backend/java/spring/design-patterns.md) | 工厂/单例/代理/模板方法/观察者/适配器/策略/责任链等模式的角色映射、源码锚点与面试答法 | 想系统答好模式题的开发者 |
+| Spring | [Spring Boot 自动装配原理详解](backend/java/spring/boot-autoconfiguration.md) | AutoConfigurationImportSelector 主链路、条件注解与用户 Bean 优先时机、自定义 Starter 完整示例、Boot 4 模块化演进 | 初中级后端、要写 Starter 的开发者 |
+| Spring | [Spring Boot 的 JAR 为什么可以直接运行](backend/java/spring/boot-executable-jar.md) | fat jar 布局与 MANIFEST、启动器家族与嵌套 jar 类加载、分层 jar 与 CDS/AOT 启动加速取舍 | 想搞懂类加载与部署形态的开发者 |
+| Spring | [@Async 注解原理分析](backend/java/spring/async-annotation-principle.md) | 代理注册链与执行器选择顺序、默认线程池坑、异常与 ThreadLocal 上下文边界、异步事件组合语义 | 初中级后端、排查过异步坑的开发者 |
+| Spring | [Spring MVC 请求处理流程详解](backend/java/spring/mvc-request-flow.md) | doDispatch 源码走读、参数/返回值 SPI 与自定义注解示例、Filter/Interceptor/AOP 对比、统一异常处理与异步请求 | 初中级后端、想扩展 MVC 的开发者 |
 
 后续会按「语言与运行时 → 数据库 → 缓存与消息 → 前端与 BFF → 系统设计与工程实践」逐步补充，新文档会同步登记到上表。
 
@@ -29,7 +37,8 @@ full-stack-guide/
 └── backend/           # 领域大类目录，可按 语言/主题 分层
     └── java/
         └── spring/    # 技术主题目录
-            └── summary.md
+            ├── summary.md
+            └── ...    # 该主题的专题文档（代理、生命周期、事务、自动装配等）
 ```
 
 每个主题目录对应一个技术主题，可直接位于根目录（如 `redis/`），也可按领域分层（如 `backend/java/spring/`）；目录内按「一份总结 + 若干专题」组织。**总结文档在每个主题目录中固定命名为 `summary.md`**，是该主题的入口；专题文档使用英文 kebab-case 描述性命名。标题与正文为简体中文，具体文档见上方「内容导航」。
