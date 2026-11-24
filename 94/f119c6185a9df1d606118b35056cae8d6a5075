@@ -1,0 +1,43 @@
+backend/java/spring/transaction.md
+  s_6f33af11d73580::t_19c44bbb6afaaa 6-7
+backend/java/spring/design-patterns.md
+  s_6f33af11d73580::t_7ba503e93f5b0c 5-6
+backend/java/spring/summary.md
+  s_6f33af11d73580::t_6fd8216d6fda36 5-6
+backend/java/spring/bean-lifecycle-and-circular-dependency.md
+  s_6f33af11d73580::t_33fdbd2aef7aef 5-6
+backend/java/spring/boot-autoconfiguration.md
+  s_6f33af11d73580::t_c8a0193ab17c92 5-6
+backend/java/spring/boot-executable-jar.md
+  s_6f33af11d73580::t_cd26d371d85fed 5-6
+redis/skiplist-and-sorted-set.md
+  s_6f33af11d73580::t_394570b3a557bf 6-7
+redis/summary.md
+  s_6f33af11d73580::t_b0ff05461b56ac 5-6
+README.md
+  s_6f33af11d73580::t_e855d53f594b43 5-6
+  s_6f33af11d73580::t_4717a9edf322a6 13-25
+  s_6f33af11d73580::t_11ad06537592a5 70
+backend/java/spring/async-annotation-principle.md
+  s_6f33af11d73580::t_558e7c1dbca483 5-6
+backend/java/spring/mvc-request-flow.md
+  s_6f33af11d73580::t_3b10a7415317bd 5-6
+backend/java/spring/ioc-and-aop.md
+  s_6f33af11d73580::t_c9f65460da50c2 6-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "94f119c6185a9df1d606118b35056cae8d6a5075",
+  "prompts": {},
+  "sessions": {
+    "s_6f33af11d73580": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_ygcxn5s868ek",
+        "model": "qwen4-max"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
