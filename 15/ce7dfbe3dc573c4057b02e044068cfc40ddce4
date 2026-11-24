@@ -1,0 +1,21 @@
+README.md
+  s_77d58778bfc3b2::t_d60c65f797454e 26,30
+  s_77d58778bfc3b2::t_7c7475b7e05397 47-53
+  s_77d58778bfc3b2::t_8ee9514f1f0660 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "15ce7dfbe3dc573c4057b02e044068cfc40ddce4",
+  "prompts": {},
+  "sessions": {
+    "s_77d58778bfc3b2": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_zolov1hilnxz",
+        "model": "auto(free)"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
