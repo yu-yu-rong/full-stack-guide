@@ -1,0 +1,24 @@
+redis/skiplist-and-sorted-set.md
+  s_63108721c11acc::t_eda0cc18e01ceb 85-93
+  s_63108721c11acc::t_e07ad9edaea01b 423
+  s_63108721c11acc::t_ed8a4b88e8e55a 1-84,94-290,292-422,424-511,513-644,646-1015
+  s_63108721c11acc::t_4eae9268506ebf 512
+  s_63108721c11acc::t_163098869653c1 291
+  s_63108721c11acc::t_65ecc33d079613 645
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "84b138f4d6b3e611a85d03db27a2fd7a69142985",
+  "prompts": {},
+  "sessions": {
+    "s_63108721c11acc": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_itz0c03dq1bu",
+        "model": "auto(free)"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
