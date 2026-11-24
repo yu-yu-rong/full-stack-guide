@@ -1,0 +1,19 @@
+README.md
+  s_77d58778bfc3b2::t_e777ce84b95212 2-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "4d0950077e6d09453fdaf1d23377458c690410d8",
+  "prompts": {},
+  "sessions": {
+    "s_77d58778bfc3b2": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_zolov1hilnxz",
+        "model": "auto(free)"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
