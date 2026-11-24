@@ -1,0 +1,19 @@
+.gitignore
+  s_6bff5b900462c7::t_156fa9d177084c 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "a9b39d68863f075ec5e64599859ed60501a032cf",
+  "prompts": {},
+  "sessions": {
+    "s_6bff5b900462c7": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_zlokog1zdmss",
+        "model": "auto(free)"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
