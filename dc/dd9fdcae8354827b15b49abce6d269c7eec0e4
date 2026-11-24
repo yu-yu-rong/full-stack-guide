@@ -1,0 +1,43 @@
+redis/skiplist-and-sorted-set.md
+  s_65ce1bf5efeaf6::t_19516e1a854680 823,825
+  s_65ce1bf5efeaf6::t_63a36f92a56cf9 118-121
+  s_65ce1bf5efeaf6::t_0c405072b58564 123
+  s_65ce1bf5efeaf6::t_dcb04553ba0d5b 785-786
+  s_65ce1bf5efeaf6::t_f18b016b70a250 789
+  s_65ce1bf5efeaf6::t_90b461b062825e 362-363
+redis/summary.md
+  s_65ce1bf5efeaf6::t_57f1204d429508 78
+  s_65ce1bf5efeaf6::t_172f676345ccd9 289
+  s_65ce1bf5efeaf6::t_f5d330e2afd94b 98-101
+  s_65ce1bf5efeaf6::t_c12d4ffbefa753 939-940
+  s_65ce1bf5efeaf6::t_862f753473359b 378
+  s_65ce1bf5efeaf6::t_febf34625081e1 911-913,919
+  s_65ce1bf5efeaf6::t_b31d5ac65b1a5d 211-213
+  s_65ce1bf5efeaf6::t_42320f4922d095 738
+  s_65ce1bf5efeaf6::t_a4d9cda907d03b 199
+  s_65ce1bf5efeaf6::t_556c05e64ce61a 429
+  s_65ce1bf5efeaf6::t_12d84546b6db1e 159,163
+  s_65ce1bf5efeaf6::t_fa235a21ecdc5c 906
+  s_65ce1bf5efeaf6::t_0c35ddf9350102 173
+  s_65ce1bf5efeaf6::t_5bdc7dbe759dd1 974
+  s_65ce1bf5efeaf6::t_f484d7d7976973 777-778
+  s_65ce1bf5efeaf6::t_4353d05d5d1fdb 847-848,852-853
+  s_65ce1bf5efeaf6::t_01edd7888aa85a 899
+  s_65ce1bf5efeaf6::t_0f32b9a82c6075 650
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "dcdd9fdcae8354827b15b49abce6d269c7eec0e4",
+  "prompts": {},
+  "sessions": {
+    "s_65ce1bf5efeaf6": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_m6ipb1bdyh6q",
+        "model": "qwen4-max"
+      },
+      "human_author": "y.rong <y.rong@trip.com>"
+    }
+  }
+}
