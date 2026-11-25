@@ -2,7 +2,7 @@
 
 > 一句话概括：Bean 生命周期是 `doCreateBean` 里「实例化 → 注入 → 初始化」三段流水线加上一串可插拔回调；循环依赖能解，靠的是**把「实例化」和「初始化」拆开、用三级缓存提前暴露半成品**——而三级缓存存在的真正理由，是让 AOP 代理的生成时机不被循环依赖破坏。
 
-预计阅读时间：大约 75 分钟
+预计阅读时间：大约 80 分钟
 
 所属主题：[Spring 常见面试题总结](summary.md)
 
@@ -24,7 +24,7 @@
 | 读者 | 建议阅读 | 关注点 |
 | --- | --- | --- |
 | 初级（1 年内） | 1.1~1.2、1.5~1.6、6.6、8 | 八阶段全景、初始化/销毁三件套、哪些循环依赖无解 |
-| 中级（1~3 年） | 1、4、5、6 全部 | `doCreateBean` 走读、三级缓存逐级查找、A⇄B+AOP 时序推演 |
+| 中级（1~3 年） | 1、4、5、6 全部 | `doCreateBean` 走读、三级缓存逐级查找、A⇄B 有/无 AOP 时序对照 |
 | 高级（3 年+） | 2、3、4.6、5、7 | `refresh()` 骨架、CGLIB 增强配置类、一致性校验、扩展点选型 |
 | 选型/架构 | 3.3、6.5、7.1 | Lite 的启动收益、官方对循环依赖的态度、团队扩展点规范 |
 
@@ -484,7 +484,11 @@ public Object postProcessAfterInitialization(@Nullable Object bean, String beanN
 
 展开 1.2 的校验段：`getSingleton(beanName, false)` 只查不生产，**返回非 null 说明真有人取过早期引用**（循环实际发生）；`exposedObject == bean`（初始化后没换对象）→ 把早期引用作为最终对象返回，**保证 B 注入的和容器里的是同一个**；`exposedObject != bean` 且有真实依赖方 → 说明「别人注入的是裸对象/早期代理，最终成品却是另一个新包装」，抛 `BeanCurrentlyInCreationException`：「...has been injected into other beans [...] in its raw version as part of a circular reference, but has eventually been wrapped...」。`@Async` 循环就死在这（6.3）。
 
-### 4.7 A⇄B 完整时序（A 需要 AOP）
+### 4.7 A⇄B 完整时序：有 AOP 与无 AOP 对照
+
+同样是 A⇄B 字段注入，唯一变量是「A 是否需要 AOP」。两个场景里**缓存升降级的骨架完全一致**，AOP 改变的只是工厂的「产物」和尾部对齐的实际效果。先走场景一，再对照场景二，就能分清三级缓存里哪些步骤是固定流水线、哪些步骤只为 AOP 而存在。
+
+#### 场景一：A 需要 AOP、B 不需要（早期代理路径）
 
 ```mermaid
 sequenceDiagram
@@ -510,9 +514,58 @@ sequenceDiagram
     Note over C: B 持有的 proxyA == 一级缓存中 A 的最终单例 ✔
 ```
 
+#### 场景二：A、B 都不需要 AOP（裸对象路径）
+
+A、B 都不匹配任何 Advisor，全程不产生代理。对照场景一逐行看：**挂工厂、调工厂、升二级删三级的动作一步不少**，变的只是工厂的产物和尾部校验的实际效果：
+
+```mermaid
+sequenceDiagram
+    participant C as 容器
+    participant A as Bean A(无 AOP)
+    participant B as Bean B(无 AOP)
+    C->>C: beforeSingletonCreation("A")
+    C->>A: ① new A()（裸对象）
+    C->>C: addSingletonFactory("A")【三级】<br/>时机与条件同场景一，与 AOP 无关
+    C->>A: ② populateBean：发现依赖 B
+    C->>B: ① new B() → 挂 B 工厂 → ② 发现依赖 A
+    B->>C: getSingleton("A", true)
+    C->>C: 一级无 → A 创建中 → 二级无 → 同步块查三级
+    C->>C: 工厂.getObject() → getEarlyBeanReference<br/>→ 无 Advisor 命中（或无自动代理创建器）<br/>→ 原样返回裸 A
+    C->>C: 裸 A 升二级，删三级（升降级动作与场景一相同）
+    C-->>B: 注入裸 A
+    B->>B: B 完成初始化 → addSingleton("B")【一级】
+    C-->>A: 注入成品 B
+    A->>A: Aware / @PostConstruct / afterPropertiesSet
+    A->>A: ⑥ 初始化后 BPP：无代理生成<br/>exposedObject 仍是裸 A
+    A->>C: 校验：getSingleton("A", false) 返回裸 A<br/>exposedObject==裸A → 赋值是空操作（同一对象）
+    A->>C: addSingleton("A", 裸A)【一级】，清二三级
+    Note over C: B 持有的裸 A == 一级缓存中 A 的最终单例 ✔
+```
+
+一个容易忽略的细节：场景二里若容器存在自动代理创建器（Boot 的 AOP 自动配置默认开启），`getEarlyBeanReference` 仍会把裸对象记入 `earlyBeanReferences`、`wrapIfNecessary` 仍会执行 Advisor 匹配——只是匹配不到就原样返回。所以第 ⑥ 步的去重检查照样命中，只不过本来就没有代理，去重没有实际作用。
+
+#### 逐步对照：AOP 到底改变了哪几步
+
+| 步骤 | 场景一：A 需 AOP | 场景二：都不需 AOP |
+| --- | --- | --- |
+| 挂工厂入三级 | 实例化后、注入前；条件 = 单例 + 开关 + 创建中 | **完全相同**——挂不挂工厂与 AOP 无关 |
+| 工厂调用时机 | B 取 A 早期引用时按需调用 | **完全相同**——调用后升二级、删三级 |
+| 工厂产物 | `wrapIfNecessary` 命中 Advisor → 生成 `proxyA` | 无 Advisor 命中 → **原样返回裸 A** |
+| 二级缓存内容 | `proxyA`（早期代理） | 裸 A（裸对象） |
+| B 注入的对象 | `proxyA` | 裸 A |
+| 初始化后 BPP | `earlyBeanReferences` 去重，**跳过二次代理** | 无代理生成，去重无实际作用 |
+| 尾部校验 | `exposedObject==裸A` → **改用二级的 `proxyA`**，完成关键对齐 | 早期引用 == 裸对象 == 成品，赋值是空操作 |
+| 一级最终单例 | `proxyA` | 裸 A |
+
+**这组对照说明三级缓存的三件事**：
+
+- **升降级流水线与 AOP 无关**：只要「单例 + 允许循环依赖 + 创建中」就挂工厂，只要有人取早期引用就调工厂、升二级删三级。场景二里三级工厂退化成「原样返回裸对象」的恒等工厂——Spring 并没有为两种场景维护两套流程，同一套代码通吃，场景二只是多付一次 lambda 调用的成本。
+- **三级（工厂）的价值只在场景一兑现**：场景二的工厂产物是现成的裸对象，「延迟决策」无决策可做；场景一才真正面临「返回裸对象还是生成早期代理」的选择，把这个选择推迟到真正涉环的那一刻，才保护了「代理在初始化后生成」的默认时序（5.1）。
+- **二级的不可替代性也只在场景一兑现**：场景二的工厂幂等——调多少次都返回同一个裸对象，即使没有二级，多方取到的也是同一对象；场景一的工厂产物是新造的代理，必须靠二级「只生产一次、缓存结果」才能保证 B、C 拿到同一个 `proxyA`（5.2）。这正是「无 AOP 时两级够用」的具体含义。
+
 **边界与代价**：早期引用是「属性未注入、初始化未执行」的半成品——B 拿到后**在 B 的构造/注入阶段调 A 的业务方法是危险的**。容器只保证「引用一致」，不保证「状态就绪」；且早期引用生产在 `synchronized (singletonObjects)` 内，涉环解析是串行的。
 
-**实践/追问**：「三级缓存存什么、何时升降级」→ 4.1 表 + 4.2 五步；「工厂里为什么是 lambda 不是对象」→ 第 5 章。
+**实践/追问**：「三级缓存存什么、何时升降级」→ 4.1 表 + 4.2 五步；「工厂里为什么是 lambda 不是对象」→ 第 5 章；「无 AOP 时流程有什么不同」→ 上方对照表：流水线不变，变的只是工厂产物与尾部对齐。
 
 ---
 
@@ -537,7 +590,7 @@ sequenceDiagram
 
 ### 5.3 时序推演：B 注入的早期代理 == A 最终单例
 
-沿 4.7 时序，把对象同一性逐步写死（`rawA` = 裸对象，`proxyA` = 早期代理）：
+沿 4.7 场景一时序，把对象同一性逐步写死（`rawA` = 裸对象，`proxyA` = 早期代理）：
 
 | 步骤 | 动作 | 同一性证据 |
 | --- | --- | --- |
