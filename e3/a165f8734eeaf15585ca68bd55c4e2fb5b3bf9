@@ -1,0 +1,23 @@
+backend/java/spring/bean-lifecycle-and-circular-dependency.md
+  s_7d5c34bbc13364::t_b1f7d4f09a8964 5
+  s_7d5c34bbc13364::t_26fa49507dadde 27
+  s_7d5c34bbc13364::t_86362ac19c9136 487-491
+  s_7d5c34bbc13364::t_ef1e7b38e215fe 517-565,568
+  s_7d5c34bbc13364::t_64212d337f3bae 593
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "e3a165f8734eeaf15585ca68bd55c4e2fb5b3bf9",
+  "prompts": {},
+  "sessions": {
+    "s_7d5c34bbc13364": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_sh7qbo8a6ntg",
+        "model": "qwen4-max"
+      },
+      "human_author": "y.rong <yu.yu.rong@qq.com>"
+    }
+  }
+}
