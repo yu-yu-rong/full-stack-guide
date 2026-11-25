@@ -23,6 +23,19 @@
 | Spring | [Spring Boot 的 JAR 为什么可以直接运行](backend/java/spring/boot-executable-jar.md) | 大约 65 分钟 | fat jar 布局与 MANIFEST、启动器家族与嵌套 jar 类加载、分层 jar 与 CDS/AOT 启动加速取舍 | 想搞懂类加载与部署形态的开发者 |
 | Spring | [@Async 注解原理分析](backend/java/spring/async-annotation-principle.md) | 大约 55 分钟 | 代理注册链与执行器选择顺序、默认线程池坑、异常与 ThreadLocal 上下文边界、异步事件组合语义 | 初中级后端、排查过异步坑的开发者 |
 | Spring | [Spring MVC 请求处理流程详解](backend/java/spring/mvc-request-flow.md) | 大约 75 分钟 | doDispatch 源码走读、参数/返回值 SPI 与自定义注解示例、Filter/Interceptor/AOP 对比、统一异常处理与异步请求 | 初中级后端、想扩展 MVC 的开发者 |
+| Java 并发 | [Java 并发编程常见面试题总结](backend/java/concurrency/summary.md) | 大约 85 分钟 | 按真实面试顺序覆盖线程基础、JMM/volatile、synchronized/锁升级、CAS/原子类、AQS/Lock、线程池、并发容器、协调工具、异步编排、ThreadLocal、死锁排查、虚拟线程与版本演进，附 40 题快问快答与答题模板 | 初中级后端、准备面试的全栈工程师 |
+| Java 并发 | [线程基础与生命周期](backend/java/concurrency/thread-basics-and-lifecycle.md) | 大约 90 分钟 | 四种创建方式、六状态与 BLOCKED/WAITING 区分、sleep/wait/yield/join、中断三件套与安全停止、LockSupport permit、顺序执行/交替打印四版手写 | 初中级后端、想搞懂线程 API 精确语义的开发者 |
+| Java 并发 | [Java 内存模型与 volatile](backend/java/concurrency/jmm-and-volatile.md) | 大约 70 分钟 | 三大特性、JMM 抽象与硬件背景、指令重排与 as-if-serial、happens-before 规则、四类内存屏障、volatile 语义与 DCL 推演、final 与安全发布、VarHandle | 想深入 JMM 与内存语义的开发者 |
+| Java 并发 | [synchronized 与锁升级](backend/java/concurrency/synchronized-and-lock-escalation.md) | 大约 80 分钟 | monitor/ObjectMonitor 源码、Mark Word 位布局、锁升级全链路与偏向锁版本归属（JEP 374/JDK 18 移除）、wait/notify、锁粗化/消除、与 Lock 选型 | 初中级后端、想答准锁升级版本题的开发者 |
+| Java 并发 | [CAS 与原子类](backend/java/concurrency/cas-and-atomic-classes.md) | 大约 85 分钟 | CAS 与 lock cmpxchg、ABA 与 AtomicStampedReference、原子类家族与字段更新器、LongAdder/Striped64 分散计数源码、VarHandle 演进与回退 | 想深入无锁机制与原子类的开发者 |
+| Java 并发 | [AQS 与 Lock 家族](backend/java/concurrency/aqs-and-locks.md) | 大约 90 分钟 | AQS state+CLH 变体队列独占/共享源码、ReentrantLock 公平/非公平、Condition 队列迁移、ReadWriteLock 位拆分与降级、StampedLock 乐观读、手写同步器 | 准备中高级面试、想读 j.u.c 源码的开发者 |
+| Java 并发 | [线程池原理与工程实践](backend/java/concurrency/thread-pool.md) | 大约 90 分钟 | 七参数与 execute 三步源码、ctl 五状态、拒绝策略、Executors OOM 坑、submit 吞异常、调优与优雅关闭、监控与动态线程池、ScheduledThreadPoolExecutor | 初中级后端、被线程池坑过的开发者 |
+| Java 并发 | [并发容器与阻塞队列](backend/java/concurrency/concurrent-collections.md) | 大约 90 分钟 | HashMap 并发问题、ConcurrentHashMap JDK 7/8 源码（putVal/sizeCtl/协助扩容/计数）、CopyOnWriteArrayList、BlockingQueue 家族与生产者-消费者、CLQ/SkipListMap | 初中级后端、想搞懂 CHM 与队列选型的开发者 |
+| Java 并发 | [并发协调工具](backend/java/concurrency/concurrency-tools.md) | 大约 85 分钟 | CountDownLatch/CyclicBarrier/Semaphore/Exchanger/Phaser 源码与选型、Latch vs Barrier 必考对比、线程池+Barrier 死锁反例 | 初中级后端、需要多线程协作编排的开发者 |
+| Java 并发 | [Fork/Join 与 CompletableFuture 异步编排](backend/java/concurrency/forkjoin-and-completable-future.md) | 大约 80 分钟 | FutureTask 状态机、work-stealing 双端队列、commonPool 与 parallelStream 坑、CompletableFuture 组合/异常/执行线程规则、超时 API | 初中级后端、要做异步聚合编排的开发者 |
+| Java 并发 | [ThreadLocal 与上下文传递](backend/java/concurrency/threadlocal.md) | 大约 90 分钟 | ThreadLocalMap 与弱引用、内存泄漏两模式、线程池串号、InheritableThreadLocal 继承时机、TTL capture/replay/restore、ScopedValue（JDK 25） | 初中级后端、排查过上下文泄漏/串号的开发者 |
+| Java 并发 | [死锁与并发问题排查](backend/java/concurrency/deadlock-and-troubleshooting.md) | 大约 65 分钟 | 死锁四条件与破解、jstack/jcmd/Arthas/JFR 工具链、CPU 飙高排查全流程、锁竞争优化、伪共享与 @Contended、JMH 陷阱 | 中高级后端、负责线上排障的开发者 |
+| Java 并发 | [虚拟线程与结构化并发（JDK 21+）](backend/java/concurrency/virtual-threads.md) | 大约 85 分钟 | Loom M:N 调度与堆上栈、pinning 与 JEP 491（JDK 24）、不要池化虚拟线程、结构化并发（JDK 25 仍 preview）、ScopedValue、迁移清单 | 想落地 JDK 21+ 并发新特性的开发者 |
 
 后续会按「语言与运行时 → 数据库 → 缓存与消息 → 前端与 BFF → 系统设计与工程实践」逐步补充，新文档会同步登记到上表。
 
@@ -38,9 +51,12 @@ full-stack-guide/
 │   └── ...            # 该主题的专题文档（底层结构、源码、场景实践）
 └── backend/           # 领域大类目录，可按 语言/主题 分层
     └── java/
-        └── spring/    # 技术主题目录
+        ├── spring/    # 技术主题目录
+        │   ├── summary.md
+        │   └── ...    # 该主题的专题文档（代理、生命周期、事务、自动装配等）
+        └── concurrency/  # 技术主题目录（Java 并发）
             ├── summary.md
-            └── ...    # 该主题的专题文档（代理、生命周期、事务、自动装配等）
+            └── ...    # 该主题的专题文档（JMM、锁、AQS、线程池、并发容器、虚拟线程等）
 ```
 
 每个主题目录对应一个技术主题，可直接位于根目录（如 `redis/`），也可按领域分层（如 `backend/java/spring/`）；目录内按「一份总结 + 若干专题」组织。**总结文档在每个主题目录中固定命名为 `summary.md`**，是该主题的入口；专题文档使用英文 kebab-case 描述性命名。标题与正文为简体中文，具体文档见上方「内容导航」。
