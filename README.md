@@ -39,6 +39,17 @@
     - [ThreadLocal 与上下文传递](backend/java/concurrency/threadlocal.md)
     - [死锁与并发问题排查](backend/java/concurrency/deadlock-and-troubleshooting.md)
     - [虚拟线程与结构化并发（JDK 21+）](backend/java/concurrency/virtual-threads.md)
+  - [`mybatis/`](backend/java/mybatis/)
+    - [MyBatis 常见面试题总结](backend/java/mybatis/summary.md)
+    - [MyBatis 核心架构与 SQL 执行全流程](backend/java/mybatis/architecture-and-sql-execution.md)
+    - [Mapper 接口动态代理与参数绑定](backend/java/mybatis/mapper-proxy-and-binding.md)
+    - [动态 SQL 原理与 SQL 注入防御](backend/java/mybatis/dynamic-sql-and-injection.md)
+    - [结果映射、TypeHandler 与懒加载](backend/java/mybatis/result-mapping-and-typehandler.md)
+    - [MyBatis 一级与二级缓存机制](backend/java/mybatis/cache-mechanism.md)
+    - [MyBatis 插件机制与分页原理](backend/java/mybatis/plugin-and-pagination.md)
+    - [MyBatis 与 Spring 集成及事务管理](backend/java/mybatis/spring-integration-and-transaction.md)
+    - [MyBatis 批量操作与性能优化](backend/java/mybatis/batch-and-performance.md)
+    - [MyBatis-Plus 与 ORM 生态选型](backend/java/mybatis/mybatis-plus-and-ecosystem.md)
 
 每个主题目录下的 `summary.md`（总结文档）为入口，其余为专题文档。后续会按「语言与运行时 → 数据库 → 缓存与消息 → 前端与 BFF → 系统设计与工程实践」逐步补充，新文档会同步补进上面的文件树。
 
