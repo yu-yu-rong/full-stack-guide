@@ -499,7 +499,7 @@ else {
 
 ### 9.1 Filter 链（Servlet 容器层）
 
-注意归属：Filter 链是 **Servlet 容器**（如 Tomcat 的 `ApplicationFilterChain#internalDoFilter`）实现的，Spring 只负责注册 Filter。递归传递：
+注意归属：Filter 链是 **Servlet 容器**（如 Tomcat 的 `ApplicationFilterChain#internalDoFilter`，9.0.x / 10.1.x 分支可见该私有方法；main 分支已把它内联进 `doFilter`）实现的，Spring 只负责注册 Filter。递归传递：
 
 ```java
 // ApplicationFilterChain#internalDoFilter（Tomcat，简化）
