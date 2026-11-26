@@ -1,0 +1,183 @@
+backend/java/mybatis/result-mapping-and-typehandler.md
+  s_cfd82c0a27faed::t_b821a52ed74a85 536-537
+  s_cfd82c0a27faed::t_2957e85d7ff7d8 291,295-297,305-310
+  s_cfd82c0a27faed::t_9a2244d3e9baf2 327
+  s_cfd82c0a27faed::t_66da7267a80594 525
+  s_cfd82c0a27faed::t_aff53dbc8bd8d2 113
+  s_cfd82c0a27faed::t_0c1cfdcc05b542 5
+  s_cfd82c0a27faed::t_fead323282dc3b 1-4,6-112,114-290,292-294,298-304,311-326,328-524,526-535,538-651,653-660,662-663,667-674,676-802,805-882
+  s_cfd82c0a27faed::t_85a237c39bdafc 652,661,664-666,675
+  s_cfd82c0a27faed::t_96a825643a4d0f 803-804
+backend/java/mybatis/dynamic-sql-and-injection.md
+  s_cfd82c0a27faed::t_0ab1bdb031d35e 6
+  s_cfd82c0a27faed::t_76811d7561f8d2 545
+  s_cfd82c0a27faed::t_6b129af158840d 755-763,773-777
+  s_cfd82c0a27faed::t_df98a5462f94a2 891
+  s_cfd82c0a27faed::t_6bed9cff0ba39d 50
+  s_cfd82c0a27faed::t_78ca6af273ed88 261
+  s_cfd82c0a27faed::t_1be0a59e3dabdb 1-5,7-49,51-260,262-544,546-678,680-754,764-772,778-810,812,818,822,825-845,847-890,892-895,897-1079
+  s_cfd82c0a27faed::t_9379439fc326bf 679
+  s_cfd82c0a27faed::t_7054e5e716e60e 811,813-817,819-821,823-824
+  s_cfd82c0a27faed::t_9d1163c1cc7b37 846
+  s_cfd82c0a27faed::t_9778c0d8f6c694 896
+backend/java/mybatis/mapper-proxy-and-binding.md
+  s_cfd82c0a27faed::t_314f8630685e8b 10,136,985
+  s_cfd82c0a27faed::t_51ece5b9e102ca 21
+  s_cfd82c0a27faed::t_e5a18ab62dacc9 363
+  s_cfd82c0a27faed::t_565bfc45857a29 6
+  s_cfd82c0a27faed::t_06c932c5089d87 172-173
+  s_cfd82c0a27faed::t_a32edcf4a4954d 373
+  s_cfd82c0a27faed::t_5d1bb0ebaff3be 1-5,7-9,11-20,22-135,137-146,148-171,174-362,364-372,374-984,986-1022
+backend/java/mybatis/batch-and-performance.md
+  s_cfd82c0a27faed::t_2fb7cf7c84f0dc 185
+  s_cfd82c0a27faed::t_ee53d81aa49635 394,397
+  s_cfd82c0a27faed::t_9aa3e31802bb2a 10
+  s_cfd82c0a27faed::t_3fb729cc2ff3e0 457
+  s_cfd82c0a27faed::t_1206f88e40d5d2 627
+  s_cfd82c0a27faed::t_871a02b8de649a 417-418
+  s_cfd82c0a27faed::t_65cbbeb73d01dd 576
+  s_cfd82c0a27faed::t_3e19898a1c5ef7 689
+  s_cfd82c0a27faed::t_f987aaa79bcf82 1-5,7-9,11-184,186-230,232-393,395-396,398-416,419-444,446-456,458-518,520-575,577-626,628-641,643-687,690-727
+  s_cfd82c0a27faed::t_92afa6101429aa 231
+  s_cfd82c0a27faed::t_983ed572f14227 519
+  s_cfd82c0a27faed::t_6847c212b54562 6
+  s_cfd82c0a27faed::t_7daad55664acc3 688
+  s_cfd82c0a27faed::t_6f87d8c0d94d4b 642
+backend/java/mybatis/architecture-and-sql-execution.md
+  s_cfd82c0a27faed::t_a60c84ba4c963c 6
+  s_cfd82c0a27faed::t_78e44afbc77db0 395
+  s_cfd82c0a27faed::t_876e2438a6bbaa 10
+  s_cfd82c0a27faed::t_726a4c592cb535 719
+  s_cfd82c0a27faed::t_e516dbe55fa788 863
+  s_cfd82c0a27faed::t_6980ea909cd663 985
+  s_cfd82c0a27faed::t_5ee01cccdd876b 986
+  s_cfd82c0a27faed::t_38ad2b17194f17 1001
+  s_cfd82c0a27faed::t_25e0e6498d0ec7 970
+  s_cfd82c0a27faed::t_432cdcbb688aad 778
+  s_cfd82c0a27faed::t_43f2d17cc6da40 338,341-342
+  s_cfd82c0a27faed::t_9e50fcc065b04e 1-5,7-9,11-337,339-340,343-394,396-417,419-619,621-645,647-718,720-777,779-862,864-969,971-984,987-1000,1002-1018
+  s_cfd82c0a27faed::t_2f469a8eb8cb98 620
+  s_cfd82c0a27faed::t_5a27c5a17a899f 418
+  s_cfd82c0a27faed::t_d077dcd036353f 646
+backend/java/mybatis/mybatis-plus-and-ecosystem.md
+  s_cfd82c0a27faed::t_a464f94ce278f8 83-88
+  s_cfd82c0a27faed::t_fb5e841c4d644a 291-292
+  s_cfd82c0a27faed::t_125e197bdb7193 1-5,7-9,11-82,89-100,102-218,220,222-239,247-250,253-290,293-306,308-389,391-475,477-498,501-563,565-753,756-795,797-832,834-885,887-980,982-1020,1022-1024
+  s_cfd82c0a27faed::t_d9601c82896ccd 476
+  s_cfd82c0a27faed::t_5f19193c707bdc 564
+  s_cfd82c0a27faed::t_f9376978cf9e09 6
+  s_cfd82c0a27faed::t_066dfdf571d969 754-755
+  s_cfd82c0a27faed::t_d90f0156afc01d 833
+  s_cfd82c0a27faed::t_7e25954d5049dd 1021
+  s_cfd82c0a27faed::t_3c0971aeb2919a 240-246,251-252
+  s_cfd82c0a27faed::t_14a0079630148b 307
+  s_cfd82c0a27faed::t_de2410fabf2a0f 981
+  s_cfd82c0a27faed::t_76d15d805febf7 10
+  s_cfd82c0a27faed::t_8cba6fa98b94d7 796
+  s_cfd82c0a27faed::t_8a9801012b6acb 886
+  s_cfd82c0a27faed::t_66d73bf7ea5146 390
+  s_cfd82c0a27faed::t_2b1966e675f018 499-500
+  s_cfd82c0a27faed::t_4774fa65c03b83 101
+README.md
+  s_cfd82c0a27faed::t_cef5a94c75f391 42-52
+backend/java/mybatis/spring-integration-and-transaction.md
+  s_cfd82c0a27faed::t_03f7e8298b0199 825
+  s_cfd82c0a27faed::t_d5bab7e03cba6c 824
+  s_cfd82c0a27faed::t_da5a0b8374791e 444
+  s_cfd82c0a27faed::t_8a534a0c9a5921 473,476-477
+  s_cfd82c0a27faed::t_81b6180c09471a 253
+  s_cfd82c0a27faed::t_198acd00f29723 6
+  s_cfd82c0a27faed::t_ca69f0242bdbdd 467-468
+  s_cfd82c0a27faed::t_f60d39728017a0 321-333
+  s_cfd82c0a27faed::t_67fa7e6dddbd3c 746,748-751,753-759,763-764,766
+  s_cfd82c0a27faed::t_e19a8c00a95d8e 678
+  s_cfd82c0a27faed::t_9baeb66f3c9733 1-5,7-252,254-320,334-336,338-443,445-466,470-472,474-475,478,480-532,534-601,605-652,654-656,660,663-670,674-677,680-745,747,752,760-762,765,767-801,804-821,823,826-841,843-852,854-857
+  s_cfd82c0a27faed::t_e5d7ed1f367d58 337
+  s_cfd82c0a27faed::t_b4ac327d3c32df 602-604
+  s_cfd82c0a27faed::t_c8d4aadff8f311 653,657-659,661-662
+  s_cfd82c0a27faed::t_82b061e09a8279 679
+  s_cfd82c0a27faed::t_8d96ca4909b8a9 842
+  s_cfd82c0a27faed::t_db98fa2ca81926 853
+  s_cfd82c0a27faed::t_32c2ec94f6fbc1 479
+  s_cfd82c0a27faed::t_657b74dacce5e7 533
+  s_cfd82c0a27faed::t_82fdcfec2c5466 671-673
+  s_cfd82c0a27faed::t_70eee9106989e2 822
+  s_cfd82c0a27faed::t_1d7a139c0d4dad 469
+  s_cfd82c0a27faed::t_c20d9f91233d70 802-803
+backend/java/mybatis/plugin-and-pagination.md
+  s_cfd82c0a27faed::t_4eaa506d9b2416 562
+  s_cfd82c0a27faed::t_dfb5b468b2a32e 670
+  s_cfd82c0a27faed::t_6b26bb05dedbdc 717
+  s_cfd82c0a27faed::t_e2dd58758c28cb 884
+  s_cfd82c0a27faed::t_cdf69cd90c9f9c 729
+  s_cfd82c0a27faed::t_30a5d36b064567 925
+  s_cfd82c0a27faed::t_35e03a67a08129 6
+  s_cfd82c0a27faed::t_97f71e0709ac2f 200
+  s_cfd82c0a27faed::t_231aab42c8cd22 355
+  s_cfd82c0a27faed::t_02294d0300a117 827
+  s_cfd82c0a27faed::t_5bf2b8fdcfca84 890
+  s_cfd82c0a27faed::t_e39c708388bcc0 124
+  s_cfd82c0a27faed::t_a07894a13b320f 887
+backend/java/mybatis/cache-mechanism.md
+  s_cfd82c0a27faed::t_891b7c02267295 1-5,7-47,49-96,98-272,274-280,287-300,302-313,315-548,550-671,673-698,700-708,710,712-714,716-727,729-733,735-750
+  s_cfd82c0a27faed::t_6ff61fa41ce715 709
+  s_cfd82c0a27faed::t_989aa5d0e052b4 549
+  s_cfd82c0a27faed::t_ff077d0a10a840 48
+  s_cfd82c0a27faed::t_2cd098bd7e5530 734
+  s_cfd82c0a27faed::t_4444069b2c36ac 301
+  s_cfd82c0a27faed::t_4b8421eef11f5e 273
+  s_cfd82c0a27faed::t_f60b1ae9e32f52 314
+  s_cfd82c0a27faed::t_de8a6e67f2bcd1 699
+  s_cfd82c0a27faed::t_3027139647feff 715
+  s_cfd82c0a27faed::t_9b0e57cd2a99e6 728
+  s_cfd82c0a27faed::t_6afe4f32069f63 281-286
+  s_cfd82c0a27faed::t_81b28f712616e7 711
+  s_cfd82c0a27faed::t_fa336ba8d7a061 97
+  s_cfd82c0a27faed::t_5fcea419335677 6
+backend/java/mybatis/summary.md
+  s_cfd82c0a27faed::t_57f4a1b50392b6 303,815
+  s_cfd82c0a27faed::t_f756c5d38137ce 484-489
+  s_cfd82c0a27faed::t_61d1a820f8608c 801
+  s_cfd82c0a27faed::t_105ec58c657c99 588
+  s_cfd82c0a27faed::t_bd2be792523ac3 583
+  s_cfd82c0a27faed::t_4e84a50fe6094a 850-851
+  s_cfd82c0a27faed::t_93ca72196f5e09 652
+  s_cfd82c0a27faed::t_26d8c212e998e3 576
+  s_cfd82c0a27faed::t_3b2e6b7e1880a5 201
+  s_cfd82c0a27faed::t_c528666ef50ded 894
+  s_cfd82c0a27faed::t_2be6553a52c396 28
+  s_cfd82c0a27faed::t_e731c930691062 9
+  s_cfd82c0a27faed::t_b4d1d39201f6b6 5
+  s_cfd82c0a27faed::t_11b65f57bd278c 45
+  s_cfd82c0a27faed::t_0fcdf1fe33f24b 290
+  s_cfd82c0a27faed::t_0af1a99e6e4579 982
+  s_cfd82c0a27faed::t_e82be4bd992549 903
+  s_cfd82c0a27faed::t_de5a25affc492a 466,469-473
+  s_cfd82c0a27faed::t_2f39a98e498a87 819-821
+  s_cfd82c0a27faed::t_2129f0ef4a45a8 953
+  s_cfd82c0a27faed::t_66403d8df25af8 454
+  s_cfd82c0a27faed::t_e5fc67603aa141 907
+  s_cfd82c0a27faed::t_d3302bf83c32ea 995
+  s_cfd82c0a27faed::t_55e6e408479c0e 841-844
+  s_cfd82c0a27faed::t_206dfa3a0212d1 635-636
+  s_cfd82c0a27faed::t_778586b065ddaa 859-860
+  s_cfd82c0a27faed::t_677a43f0cff3a1 895
+  s_cfd82c0a27faed::t_caa71846146fc2 1-4,6-8,10-27,29-44,46-200,202-289,291-302,304-453,455-465,467-468,474-483,490-569,571-575,577-582,584-587,589-634,637-651,653-800,802-814,816-818,822-840,845-849,852-858,861-893,896-902,904-906,908-952,954-981,983-994,996-999
+  s_cfd82c0a27faed::t_046670eecbbe04 570
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "1d4d36927d32c2bce6e008e27de19a9e1cd3bcec",
+  "prompts": {},
+  "sessions": {
+    "s_cfd82c0a27faed": {
+      "agent_id": {
+        "tool": "chengxiaobang",
+        "id": "s_r5nk8wq0z1p7",
+        "model": "qwen4-max"
+      },
+      "human_author": "y.rong <yu.yu.rong@qq.com>"
+    }
+  }
+}
