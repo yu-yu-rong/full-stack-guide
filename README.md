@@ -62,6 +62,20 @@
     - [MyBatis 与 Spring 集成及事务管理](backend/java/mybatis/spring-integration-and-transaction.md)
     - [MyBatis 批量操作与性能优化](backend/java/mybatis/batch-and-performance.md)
     - [MyBatis-Plus 与 ORM 生态选型](backend/java/mybatis/mybatis-plus-and-ecosystem.md)
+- [`frontend/`](frontend/)
+  - [`javascript/`](frontend/javascript/)
+    - [JavaScript 基础常见面试题总结](frontend/javascript/summary.md)
+    - [数据类型与类型转换：从 typeof 到 ToPrimitive](frontend/javascript/types-and-coercion.md)
+    - [作用域、闭包与执行上下文](frontend/javascript/scope-closures-and-execution-context.md)
+    - [this 绑定与函数调用](frontend/javascript/this-binding-and-function-call.md)
+    - [原型链与继承演进](frontend/javascript/prototype-chain-and-inheritance.md)
+    - [事件循环：浏览器与 Node 的异步调度](frontend/javascript/event-loop.md)
+    - [Promise 与 async/await](frontend/javascript/promise-and-async-await.md)
+    - [迭代器、生成器与异步迭代](frontend/javascript/iterators-and-generators.md)
+    - [ES6+ 核心语法与现代 JavaScript 特性](frontend/javascript/es6-plus-and-modern-js.md)
+    - [模块系统：CommonJS 与 ESM](frontend/javascript/modules-commonjs-and-esm.md)
+    - [内存管理与垃圾回收](frontend/javascript/memory-management-and-gc.md)
+    - [对象属性与深浅拷贝](frontend/javascript/objects-properties-and-copy.md)
 
 每个主题目录下的 `summary.md`（总结文档）为入口，其余为专题文档。后续会按「语言与运行时 → 数据库 → 缓存与消息 → 前端与 BFF → 系统设计与工程实践」逐步补充，新文档会同步补进上面的文件树。
 
